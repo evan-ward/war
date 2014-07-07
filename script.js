@@ -18,6 +18,8 @@ $(document).ready(function() {
 		return value.toString();
 	}
 
+
+
 	//what does this do?
 	var deck = [];
 	var suits = ['hearts', 'diamonds', 'spades', 'clubs'];
@@ -27,17 +29,57 @@ $(document).ready(function() {
 			deck.push({number: j+1, suit: suit});
 		}
 	}
+
 	
 	//shuffle the deck
+	function shuffle(array) {
+  var m = array.length, t, i;
+
+  // While there remain elements to shuffle…
+  while (m) {
+
+    // Pick a remaining element…
+    i = Math.floor(Math.random() * m--);
+
+    // And swap it with the current element.
+    t = array[m];
+    array[m] = array[i];
+    array[i] = t;
+  }
+
+  return array;
+}
+
+
+shuffle(deck);
+
 	
 	
 	var cards_player_1 = [];
 	var cards_player_2 = [];
 	//divide out the cards into the two arrays
 	
+	for(var i = 0; i<deck.length; i++){
+		if(i % 2 === 0){
+    	cards_player_1.push(deck[i]);
+    	} else {
+    		cards_player_2.push(deck[i]);
+   		}
+	}
+
+
+    console.log(cards_player_2);
+    console.log(cards_player_1);
 	
 	//create a function (algorithm) called "war" that takes two cards as parameters, compares them and returns a winner. A tie should return false.
-	function war() {
+	function war(card_1, card_2) {
+		if(card_1.number > card_2.number){
+			return card_1;
+		} else if(card_2.number > card_1.number){
+			return card_2;
+		} else {
+			return false;
+		}
 	}
 	
 	
@@ -45,6 +87,19 @@ $(document).ready(function() {
 		//compare the cards
 		//give the winner both cards (at end of deck)
 	function play() {
+		var card_1 = cards_player_1.shift();
+		var card_2 = cards_player_2.shift();
+		var winner = war(card_1, card_2);
+		if(winner === card_1){
+			cards_player_1.push(card_1, card_2);
+		} else if(winner === card_2){
+			cards_player_2.push(card_1, card_1);
+		} else {
+			cards_player_1.push(card_1);
+			cards_player_2.push(card_2);
+		}
+		
+
 		
 		//this function (defined below) will continue to the next turn
 		advance();
