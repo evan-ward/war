@@ -90,13 +90,21 @@ shuffle(deck);
 		var card_1 = cards_player_1.shift();
 		var card_2 = cards_player_2.shift();
 		var winner = war(card_1, card_2);
+		var table = [];
 		if(winner === card_1){
 			cards_player_1.push(card_1, card_2);
+			for (var i = 0; i < table.length; i++){
+				cards_player_1.push(i);
+			}
 		} else if(winner === card_2){
-			cards_player_2.push(card_1, card_1);
+			cards_player_2.push(card_1, card_2);
+			for (var i = 0; i < table.length; i++){
+				cards_player_2.push(i);
+			}
 		} else {
-			cards_player_1.push(card_1);
-			cards_player_2.push(card_2);
+			// cards_player_1.push(card_1);
+			// cards_player_2.push(card_2);
+			table.push(card_1, card_2);
 		}
 		
 
